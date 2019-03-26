@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
     "test": "jest --watch",
-    "test:coverage": "jest --coverage --colors"
+    "coverage": "jest --coverage --colors"
   },
   "repository": {
     "type": "git",
