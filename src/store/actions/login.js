@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import axios from '../../axiosInstance';
+import axios from 'axios';
 
 export const loginStarted = () => {
   return {
@@ -32,7 +32,10 @@ export const loginFetch = payload => {
     dispatch(loginStarted());
     const { data, history } = payload;
     return axios
-      .post('auth/login', data)
+      .post(
+        'https://oma-store-manager-api.herokuapp.com/api/v2/auth/login',
+        data
+      )
       .then(response => {
         const { user, token } = response.data;
         dispatch(loginSuccess(user));

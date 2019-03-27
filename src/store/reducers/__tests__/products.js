@@ -83,7 +83,8 @@ describe('Products Reducer', () => {
   it('REQUEST_ADD_PRODUCT_SUCCEDED action updates loading and show to false sets message and errorMsg in state', () => {
     const newState = productsReducer(state, {
       type: REQUEST_ADD_PRODUCT_SUCCEDED,
-      msg: 'cool'
+      msg: 'cool',
+      products: {}
     });
     expect(newState.show).toBe(false);
     expect(newState.loading).toBe(false);

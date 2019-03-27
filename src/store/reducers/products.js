@@ -43,7 +43,8 @@ const productsReducer = (state = initialState, action) => {
         errorMsg: '',
         message: action.msg,
         loading: false,
-        show: false
+        show: false,
+        products: [action.product, ...state.products]
       };
     case actionTypes.SHOW_MODAL:
       return {

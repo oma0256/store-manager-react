@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import axios from '../../axiosInstance';
+import axios from 'axios';
 
 export const requestStarted = isRetrieving => {
   return {
@@ -29,10 +29,11 @@ export const dismissMessage = () => {
   };
 };
 
-export const requestAddProductSucceded = msg => {
+export const requestAddProductSucceded = payload => {
   return {
     type: actionTypes.REQUEST_ADD_PRODUCT_SUCCEDED,
-    msg
+    msg: payload.msg,
+    product: payload.product
   };
 };
 
@@ -53,7 +54,9 @@ export const fetchProducts = payload => {
     dispatch(requestStarted(true));
     const { token } = payload;
     return axios
-      .get('products', { headers: { Authorization: `Bearer ${token}` } })
+      .get('https://oma-store-manager-api.herokuapp.com/api/v2/products', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
       .then(response => dispatch(fetchProductsSucceded(response.data.products)))
       .catch(() =>
         dispatch(
@@ -71,8 +74,19 @@ export const requestAddProduct = payload => {
     dispatch(requestStarted(false));
     const { token, data } = payload;
     return axios
-      .post('products', data, { headers: { Authorization: `Bearer ${token}` } })
-      .then(() => dispatch(requestAddProductSucceded('Product added.')))
+      .post(
+        'https://oma-store-manager-api.herokuapp.com/api/v2/products',
+        data,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then(response =>
+        dispatch(
+          requestAddProductSucceded({
+            msg: 'Product added.',
+            product: response.data.product
+          })
+        )
+      )
       .catch(error => {
         const errorMsg = !error.response
           ? 'Something went wrong, please check your internet connection.'
