@@ -6,7 +6,16 @@ import { loginFetch, dismissLoginError } from '../store/actions/login';
 export class LoginContainer extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    disabled: true
+  };
+
+  UNSAFE_componentWillUpdate = (nextProps, nextState) => {
+    const { email, password } = nextState;
+    if (email !== this.state.email || password !== this.state.password) {
+      const disabled = email && password ? false : true;
+      this.setState({ disabled });
+    }
   };
 
   onChangeHandler = e => this.setState({ [e.target.name]: e.target.value });

@@ -16,7 +16,8 @@ export const Login = props => {
     password,
     onSubmitHandler,
     login,
-    onDismissHandler
+    onDismissHandler,
+    disabled
   } = props;
   const { loading, errorMsg } = login;
   const loginBtn = loading ? <Spinner /> : 'Login';
@@ -51,7 +52,12 @@ export const Login = props => {
               onChange={onChangeHandler}
               password={password}
             />
-            <Button variant="primary" type="submit" block disabled={loading}>
+            <Button
+              variant="primary"
+              type="submit"
+              block
+              disabled={loading || disabled}
+            >
               {loginBtn}
             </Button>
           </Form>
